@@ -12,11 +12,11 @@ class Settings(BaseSettings):
     pinecone_index_name: str = "academic-chatbot-index"
     
     # Redis Configuration
-    redis_url: Optional[str] = os.getenv("REDIS_URL")
-    redis_host: str = os.getenv("REDIS_HOST", "localhost")
-    redis_port: int = int(os.getenv("REDIS_PORT", "6379"))
-    redis_db: int = int(os.getenv("REDIS_DB", "0"))
-    redis_password: Optional[str] = os.getenv("REDIS_PASSWORD")
+    redis_url: Optional[str] = None
+    redis_host: str = "localhost"
+    redis_port: int = 6379
+    redis_db: int = 0
+    redis_password: Optional[str] = None
     
     # Application Configuration
     app_host: str = "0.0.0.0"

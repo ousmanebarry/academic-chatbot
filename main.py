@@ -1,10 +1,12 @@
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 import uvicorn
 import logging
 import time
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from config import settings
 from models import ChatRequest, ChatResponse, DocumentUploadRequest, HealthResponse, StatsResponse
@@ -80,9 +82,16 @@ async def get_document_service() -> DocumentService:
         raise HTTPException(status_code=503, detail="Document service not initialized")
     return document_service
 
-@app.get("/", response_model=dict)
+@app.get("/ui")
+@app.get("/")
+async def serve_ui():
+    """Serve the web UI"""
+    return FileResponse("index.html")
+
+@app.get("/api", response_model=dict)
+@app.get("/api/", response_model=dict)
 async def root():
-    """Root endpoint"""
+    """Root API endpoint"""
     return {
         "message": "Academic Q&A Chatbot API",
         "version": "1.0.0",

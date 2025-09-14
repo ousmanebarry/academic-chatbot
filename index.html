@@ -532,7 +532,8 @@
 		<script>
 			class AcademicChatBot {
 				constructor() {
-					this.baseUrl = 'http://localhost:8000';
+					// Use relative URLs for production deployment
+					this.baseUrl = window.location.origin;
 					this.conversationId = `conv_${Date.now()}`;
 					this.isConnected = false;
 					this.selectedFiles = [];
