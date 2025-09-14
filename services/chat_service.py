@@ -78,18 +78,22 @@ class ChatService:
                 k=settings.top_k_results
             )
             
+            # Filter out documents with very low relevance scores (below 0.3)
+            # This helps avoid showing sources when no relevant documents were found
+            relevant_docs = [doc for doc in similar_docs if doc.get('score', 0) > 0.3] if similar_docs else []
+            
             # Generate response using OpenAI
             response_text = await self._generate_response(
                 request.message, 
-                similar_docs, 
+                relevant_docs, 
                 context
             )
             
             # Calculate confidence score
-            confidence = self._calculate_confidence(similar_docs, response_text)
+            confidence = self._calculate_confidence(relevant_docs, response_text)
             
-            # Format source documents
-            sources = self._format_sources(similar_docs)
+            # Format source documents (only show if we have relevant documents)
+            sources = self._format_sources(relevant_docs)
             
             # Create response
             response = ChatResponse(
@@ -146,8 +150,11 @@ class ChatService:
                 k=settings.top_k_results
             )
             
+            # Filter out documents with very low relevance scores
+            relevant_docs = [doc for doc in similar_docs if doc.get('score', 0) > 0.3] if similar_docs else []
+            
             # Stream response from OpenAI
-            async for chunk in self._generate_response_stream(request.message, similar_docs, context):
+            async for chunk in self._generate_response_stream(request.message, relevant_docs, context):
                 yield chunk
                 
         except Exception as e:
@@ -341,6 +348,18 @@ class ChatService:
     
     def _create_system_prompt(self, context_text: str) -> str:
         """Create system prompt for the assistant"""
+        if not context_text or context_text.strip() == "No relevant documents found.":
+            return """You are an academic assistant helping students and researchers with course-related questions.
+
+No relevant documents were found in the knowledge base for this question. Please provide a helpful general response based on your knowledge, but clearly indicate that this information is not from the uploaded documents.
+
+Guidelines:
+1. Clearly state that no relevant documents were found in the knowledge base
+2. Provide helpful general information if appropriate
+3. Suggest that the user might want to upload relevant documents
+4. Keep responses concise and professional
+5. Always maintain an academic and professional tone"""
+        
         return f"""You are an academic assistant helping students and researchers with course-related questions.
         
 Use the following context from academic documents to answer questions accurately and helpfully:
@@ -373,17 +392,31 @@ Answer the user's question based on the context provided."""
         return "\n".join(context_parts)
     
     def _format_sources(self, similar_docs: List[Dict]) -> List[SourceDocument]:
-        """Format similar documents as source documents"""
-        sources = []
+        """Format similar documents as source documents, deduplicating by document_id"""
+        if not similar_docs:
+            return []
+        
+        # Group by document_id to avoid showing multiple chunks of same document
+        document_map = {}
         for doc in similar_docs:
             metadata = doc.get('metadata', {})
-            sources.append(SourceDocument(
-                id=metadata.get('document_id', 'unknown'),
-                title=metadata.get('title', 'Unknown Document'),
-                content=doc.get('content', '')[:500] + "..." if len(doc.get('content', '')) > 500 else doc.get('content', ''),
-                score=doc.get('score', 0.0),
-                metadata=metadata
-            ))
+            doc_id = metadata.get('document_id', 'unknown')
+            
+            # Keep the chunk with the highest score for each document
+            if doc_id not in document_map or doc.get('score', 0.0) > document_map[doc_id]['score']:
+                document_map[doc_id] = {
+                    'id': doc_id,
+                    'title': metadata.get('title', 'Unknown Document'),
+                    'content': doc.get('content', '')[:500] + "..." if len(doc.get('content', '')) > 500 else doc.get('content', ''),
+                    'score': doc.get('score', 0.0),
+                    'metadata': metadata
+                }
+        
+        # Convert to SourceDocument objects, sorted by score (highest first)
+        sources = []
+        for doc_data in sorted(document_map.values(), key=lambda x: x['score'], reverse=True):
+            sources.append(SourceDocument(**doc_data))
+        
         return sources
     
     def _calculate_confidence(self, similar_docs: List[Dict], response_text: str) -> float:
