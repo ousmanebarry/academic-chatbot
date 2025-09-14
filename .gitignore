@@ -1,0 +1,15 @@
+/__pycache__/
+*/__pycache__/
+/logs/
+.env
+.env.backup
+.env.example
+.env.local
+.env.production
+.env.development
+.env.test
+.env.staging
+.env.production
+.env.development
+.env.test
+.env.staging

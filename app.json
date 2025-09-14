@@ -1,0 +1,38 @@
+{
+	"name": "Academic Chatbot",
+	"description": "AI-powered academic Q&A chatbot with semantic search",
+	"repository": "https://github.com/yourusername/academic-chatbot",
+	"logo": "https://via.placeholder.com/150",
+	"keywords": ["python", "fastapi", "openai", "pinecone", "redis"],
+	"success_url": "/",
+	"env": {
+		"OPENAI_API_KEY": {
+			"description": "Your OpenAI API key",
+			"required": true
+		},
+		"PINECONE_API_KEY": {
+			"description": "Your Pinecone API key",
+			"required": true
+		},
+		"PINECONE_ENVIRONMENT": {
+			"description": "Your Pinecone environment",
+			"required": true
+		}
+	},
+	"addons": [
+		{
+			"plan": "heroku-redis:mini"
+		}
+	],
+	"formation": {
+		"web": {
+			"quantity": 1,
+			"size": "free"
+		}
+	},
+	"buildpacks": [
+		{
+			"url": "heroku/python"
+		}
+	]
+}

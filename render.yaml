@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: academic-chatbot
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python start_production.py
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: PINECONE_API_KEY
+        sync: false
+      - key: PINECONE_ENVIRONMENT
+        sync: false
+      - key: REDIS_URL
+        fromDatabase:
+          name: academic-chatbot-redis
+          property: connectionString
+
+databases:
+  - name: academic-chatbot-redis
+    databaseName: academic-chatbot-redis
+    user: academic-chatbot-user
