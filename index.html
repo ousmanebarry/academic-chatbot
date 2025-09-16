@@ -543,8 +543,8 @@
 					this.checkConnection();
 					this.loadStats();
 
-					// Refresh stats every 30 seconds
-					setInterval(() => this.loadStats(), 30000);
+					// Refresh stats every 10 seconds
+					setInterval(() => this.loadStats(), 10000);
 				}
 
 				initializeElements() {
@@ -602,6 +602,9 @@
 							const healthPercent = Object.values(data.services).every((s) => s) ? 100 : 50;
 							document.getElementById('system-health').style.width = `${healthPercent}%`;
 							document.getElementById('health-status').textContent = data.status;
+
+							// Load stats immediately when connection is established
+							this.loadStats();
 						} else {
 							throw new Error('Server not responding');
 						}
@@ -617,6 +620,11 @@
 					if (!this.isConnected) return;
 
 					try {
+						// Show loading state
+						document.getElementById('total-queries').textContent = '...';
+						document.getElementById('active-docs').textContent = '...';
+						document.getElementById('cache-hit').textContent = '...';
+
 						const response = await fetch(`${this.baseUrl}/stats`);
 						if (response.ok) {
 							const stats = await response.json();
@@ -626,9 +634,18 @@
 							document.getElementById('cache-hit').textContent = stats.cache_hit_rate
 								? `${Math.round(stats.cache_hit_rate)}%`
 								: '0%';
+						} else {
+							// Show error state
+							document.getElementById('total-queries').textContent = '-';
+							document.getElementById('active-docs').textContent = '-';
+							document.getElementById('cache-hit').textContent = '-';
 						}
 					} catch (error) {
 						console.error('Failed to load stats:', error);
+						// Show error state
+						document.getElementById('total-queries').textContent = '-';
+						document.getElementById('active-docs').textContent = '-';
+						document.getElementById('cache-hit').textContent = '-';
 					}
 				}
 
