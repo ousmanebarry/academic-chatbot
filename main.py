@@ -88,6 +88,14 @@ async def serve_ui():
     """Serve the web UI"""
     return FileResponse("index.html")
 
+@app.get("/styles.css")
+async def serve_styles():
+    return FileResponse("styles.css", media_type="text/css")
+
+@app.get("/script.js")
+async def serve_script():
+    return FileResponse("script.js", media_type="application/javascript")
+
 @app.get("/api", response_model=dict)
 @app.get("/api/", response_model=dict)
 async def root():
