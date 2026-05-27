@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Quick Start Guide for Academic Chatbot Web UI
+Quick Start Guide for ScholarAI Web UI
 This script helps you get the web interface running quickly
 """
 
@@ -100,7 +100,7 @@ def start_web_ui():
 
 def main():
     """Main quick start function"""
-    print("🚀 Academic Chatbot - Web UI Quick Start")
+    print("🚀 ScholarAI - Web UI Quick Start")
     print("=" * 45)
     
     # Check requirements

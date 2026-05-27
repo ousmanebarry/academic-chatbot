@@ -29,7 +29,7 @@ async def lifespan(app: FastAPI):
     """Initialize and cleanup application services"""
     global chat_service, document_service, cache_service
     
-    logger.info("Starting Academic Chatbot API...")
+    logger.info("Starting ScholarAI API...")
     
     # Initialize services
     try:
@@ -56,8 +56,8 @@ async def lifespan(app: FastAPI):
 
 # Create FastAPI app
 app = FastAPI(
-    title="Academic Q&A Chatbot",
-    description="High-performance academic chatbot with semantic search",
+    title="ScholarAI",
+    description="High-performance academic Q&A assistant with semantic search",
     version="1.0.0",
     lifespan=lifespan
 )
@@ -105,7 +105,7 @@ async def serve_favicon():
 async def root():
     """Root API endpoint"""
     return {
-        "message": "Academic Q&A Chatbot API",
+        "message": "ScholarAI API",
         "version": "1.0.0",
         "status": "running"
     }

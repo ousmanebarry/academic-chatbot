@@ -1,6 +1,6 @@
 """
-Test script for the Academic Chatbot
-This script demonstrates how to use the chatbot API
+Test script for ScholarAI
+This script demonstrates how to use the ScholarAI API
 """
 
 import asyncio
@@ -234,7 +234,7 @@ class ChatbotTester:
     
     async def run_full_test(self):
         """Run complete test suite"""
-        print("🚀 Starting Academic Chatbot Test Suite\n")
+        print("🚀 Starting ScholarAI Test Suite\n")
         
         # Test health
         if not await self.test_health():
@@ -286,7 +286,7 @@ async def main():
         await tester.close()
 
 if __name__ == "__main__":
-    print("Academic Chatbot Tester")
+    print("ScholarAI Tester")
     print("======================")
     print("Make sure the chatbot server is running on http://localhost:8000")
     print("You can start it with: python main.py")

@@ -1,6 +1,6 @@
 {
-	"name": "Academic Chatbot",
-	"description": "AI-powered academic Q&A chatbot with semantic search",
+	"name": "ScholarAI",
+	"description": "AI-powered academic Q&A assistant with semantic search",
 	"repository": "https://github.com/yourusername/academic-chatbot",
 	"logo": "https://via.placeholder.com/150",
 	"keywords": ["python", "fastapi", "openai", "pinecone", "redis"],

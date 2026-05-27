@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Simple HTTP server to serve the web UI for the Academic Chatbot
+Simple HTTP server to serve the web UI for ScholarAI
 This avoids CORS issues that might occur when opening index.html directly
 """
 
@@ -22,7 +22,7 @@ def main():
         sys.exit(1)
     
     # Check if the main server is likely running
-    print("🔍 Make sure your Academic Chatbot API is running on http://localhost:8000")
+    print("🔍 Make sure your ScholarAI API is running on http://localhost:8000")
     print("   You can start it with: python start_server.py")
     print()
     

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Environment setup script for Academic Chatbot
+Environment setup script for ScholarAI
 This script helps you configure your environment variables
 """
 
@@ -9,7 +9,7 @@ from pathlib import Path
 
 def create_env_file():
     """Create .env file with template"""
-    env_content = """# Academic Chatbot Configuration
+    env_content = """# ScholarAI Configuration
 # Fill in your actual API keys below
 
 # Required API Keys (get these from your provider dashboards)
@@ -61,7 +61,7 @@ EMBEDDING_MODEL=text-embedding-ada-002
 
 def main():
     """Main setup function"""
-    print("🚀 Academic Chatbot Environment Setup")
+    print("🚀 ScholarAI Environment Setup")
     print("=" * 40)
     
     # Create .env file

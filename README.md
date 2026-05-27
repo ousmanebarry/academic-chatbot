@@ -1,6 +1,6 @@
-# Academic Q&A Chatbot
+# ScholarAI
 
-A high-performance Academic Q&A Chatbot built with FastAPI, LangChain, Pinecone, and OpenAI API. The system provides semantic search across 10,000+ documents with sub-200ms response times and handles 1,500+ daily queries.
+A high-performance academic Q&A assistant built with FastAPI, LangChain, Pinecone, and OpenAI API. The system provides semantic search across 10,000+ documents with sub-200ms response times and handles 1,500+ daily queries.
 
 ## Features
 

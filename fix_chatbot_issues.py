@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Step-by-step fix for Academic Chatbot issues
+Step-by-step fix for ScholarAI issues
 This script helps identify and fix common problems
 """
 
@@ -172,7 +172,7 @@ if __name__ == "__main__":
 
 def main():
     """Main fix function"""
-    print("🚀 Academic Chatbot Issue Fixer")
+    print("🚀 ScholarAI Issue Fixer")
     print("=" * 35)
     print("This script will help identify and fix common issues.\n")
     

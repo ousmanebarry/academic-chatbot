@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Test script for PDF upload functionality
-This script tests the new PDF upload capabilities of the Academic Chatbot
+This script tests the PDF upload capabilities of ScholarAI
 """
 
 import requests
@@ -107,7 +107,7 @@ def test_chat_with_pdf():
 def main():
     """Main test function"""
     print("🚀 PDF Upload Test Suite")
-    print("Make sure the Academic Chatbot server is running on http://localhost:8000")
+    print("Make sure the ScholarAI server is running on http://localhost:8000")
     print()
     
     # Test sequence

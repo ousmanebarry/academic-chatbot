@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Comprehensive diagnostic script to identify issues with the Academic Chatbot
+Comprehensive diagnostic script to identify issues with ScholarAI
 """
 
 import sys
@@ -243,7 +243,7 @@ def check_server_logs():
 
 def main():
     """Main diagnostic function"""
-    print("🚀 Academic Chatbot Diagnostic Tool")
+    print("🚀 ScholarAI Diagnostic Tool")
     print("=" * 40)
     
     all_checks = [

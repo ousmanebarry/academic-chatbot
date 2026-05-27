@@ -10,7 +10,7 @@ if __name__ == "__main__":
     # Get port from Railway environment variable
     port = int(os.getenv("PORT", 8000))
     
-    print("🚀 Starting Academic Chatbot (Production)")
+    print("🚀 Starting ScholarAI (Production)")
     print("=" * 45)
     print(f"🌐 Server will run on http://0.0.0.0:{port}")
     print(f"📱 Web UI available at: /")

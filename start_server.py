@@ -36,7 +36,7 @@ def check_environment():
 
 def main():
     """Main startup function"""
-    print("🚀 Starting Academic Q&A Chatbot")
+    print("🚀 Starting ScholarAI")
     print("=" * 35)
     
     # Check if .env file exists
