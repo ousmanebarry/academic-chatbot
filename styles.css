@@ -174,6 +174,34 @@ body {
 	color: var(--text);
 }
 
+.typing-indicator {
+	display: flex;
+	align-items: center;
+	padding: 14px 16px;
+}
+
+.typing-dots {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+}
+
+.typing-dots span {
+	width: 8px;
+	height: 8px;
+	background: var(--text-muted);
+	border-radius: 50%;
+	animation: typing-bounce 1.2s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing-bounce {
+	0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
+	30% { transform: translateY(-6px); opacity: 1; }
+}
+
 .message-meta {
 	font-size: 0.78rem;
 	color: var(--text-muted);

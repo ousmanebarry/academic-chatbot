@@ -145,6 +145,20 @@ class AcademicChatBot {
 		this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
 	}
 
+	showTypingIndicator() {
+		const indicator = document.createElement('div');
+		indicator.className = 'message bot-message typing-indicator';
+		indicator.id = 'typing-indicator';
+		indicator.innerHTML = `<div class="typing-dots"><span></span><span></span><span></span></div>`;
+		this.chatMessages.appendChild(indicator);
+		this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+	}
+
+	removeTypingIndicator() {
+		const indicator = document.getElementById('typing-indicator');
+		if (indicator) indicator.remove();
+	}
+
 	async sendMessage() {
 		const message = this.messageInput.value.trim();
 		if (!message || !this.isConnected) return;
@@ -153,10 +167,11 @@ class AcademicChatBot {
 		this.addMessage(message, true);
 		this.messageInput.value = '';
 
-		// Disable input while processing
+		// Disable input and show thinking indicator
 		this.sendBtn.disabled = true;
 		const sendBtnContent = this.sendBtn.innerHTML;
 		this.sendBtn.innerHTML = '<div class="loading"></div>';
+		this.showTypingIndicator();
 
 		try {
 			const response = await fetch(`${this.baseUrl}/chat`, {
@@ -173,6 +188,7 @@ class AcademicChatBot {
 
 			if (response.ok) {
 				const data = await response.json();
+				this.removeTypingIndicator();
 				this.addMessage(data.answer, false, {
 					sources: data.sources,
 					confidence: data.confidence,
@@ -185,6 +201,7 @@ class AcademicChatBot {
 				throw new Error(`HTTP ${response.status}`);
 			}
 		} catch (error) {
+			this.removeTypingIndicator();
 			this.addMessage('Sorry, I encountered an error processing your request. Please try again.', false);
 			this.showNotification('Failed to send message', 'error');
 		} finally {
