@@ -96,6 +96,10 @@ async def serve_styles():
 async def serve_script():
     return FileResponse("script.js", media_type="application/javascript")
 
+@app.get("/favicon.svg")
+async def serve_favicon():
+    return FileResponse("favicon.svg", media_type="image/svg+xml")
+
 @app.get("/api", response_model=dict)
 @app.get("/api/", response_model=dict)
 async def root():
